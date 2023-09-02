@@ -1,6 +1,6 @@
 specVersion: 0.0.5
 schema:
-  file: ./schema.graphql
+  file: schema.graphql
 dataSources:
   - kind: ethereum
     name: BinaryBlock_Genesis
@@ -18,8 +18,8 @@ dataSources:
         - User
       abis:
         - name: BinaryBlock_Genesis
-          file: ./abis/BinaryBlock_Genesis.json
+          file: BinaryBlock_Genesis/abis/BinaryBlock_Genesis.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
-      file: ./src/binary-block-genesis.ts
+      file: BinaryBlock_Genesis/BinaryBlock_Genesis.wasm
