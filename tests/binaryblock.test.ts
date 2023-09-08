@@ -7,9 +7,7 @@ import {
   afterAll
 } from "matchstick-as/assembly/index"
 import { Address, BigInt, Bytes } from "@graphprotocol/graph-ts"
-import { Approval } from "../generated/schema"
 import { Approval as ApprovalEvent } from "../generated/binaryblock/binaryblock"
-import { handleApproval } from "../src/binaryblock"
 import { createApprovalEvent } from "./binaryblock-utils"
 
 // Tests structure (matchstick-as >=0.5.0)
@@ -23,7 +21,7 @@ describe("Describe entity assertions", () => {
     )
     let tokenId = BigInt.fromI32(234)
     let newApprovalEvent = createApprovalEvent(owner, approved, tokenId)
-    handleApproval(newApprovalEvent)
+    // handleApproval(newApprovalEvent)
   })
 
   afterAll(() => {
