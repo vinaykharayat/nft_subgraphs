@@ -3,23 +3,54 @@ schema:
   file: schema.graphql
 dataSources:
   - kind: ethereum
-    name: BinaryBlock_Genesis
+    name: BIBK
     network: goerli
     source:
-      address: "0x0b1BAE4DaE34D801026EC77C8EF79d8D7c4306CD"
-      abi: BinaryBlock_Genesis
-      startBlock: 9613099
+      address: "0x74f3772504eC4dFe9Ad45ee2c8c1e10b74D0f847"
+      abi: BIBK
+      startBlock: 9652254
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
-        - BinaryBlockGenesis
-        - User
+        - ClaimRewards
+        - Purchase
+        - Sell
+        - BIBKStaked
+        - BIBKTransfer
+        - BIBKUnstaked
+        - UpdatePrice
       abis:
-        - name: BinaryBlock_Genesis
-          file: BinaryBlock_Genesis/abis/BinaryBlock_Genesis.json
+        - name: BIBK
+          file: BIBK/abis/BIBK.json
       eventHandlers:
+        - event: ClaimRewards(indexed address,uint256)
+          handler: handleClaimRewards
+      file: BIBK/BIBK.wasm
+  - kind: ethereum
+    name: binaryblock
+    network: goerli
+    source:
+      address: "0x8F0A594fE4657909aFbd542972421c087480E3D8"
+      abi: binaryblock
+      startBlock: 9658409
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Staked
+        - Transfer
+        - Unstaked
+      abis:
+        - name: binaryblock
+          file: binaryblock/abis/binaryblock.json
+      eventHandlers:
+        - event: Staked(indexed address,indexed uint256)
+          handler: handleStaked
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
-      file: BinaryBlock_Genesis/BinaryBlock_Genesis.wasm
+        - event: Unstaked(indexed address,indexed uint256)
+          handler: handleUnstaked
+      file: binaryblock/binaryblock.wasm

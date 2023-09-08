@@ -54,30 +54,17 @@ export class BinaryBlockGenesis extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get tokenId(): BigInt {
+  get tokenId(): i32 {
     let value = this.get("tokenId");
     if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
+      return 0;
     } else {
-      return value.toBigInt();
+      return value.toI32();
     }
   }
 
-  set tokenId(value: BigInt) {
-    this.set("tokenId", Value.fromBigInt(value));
-  }
-
-  get contentUri(): string {
-    let value = this.get("contentUri");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toString();
-    }
-  }
-
-  set contentUri(value: string) {
-    this.set("contentUri", Value.fromString(value));
+  set tokenId(value: i32) {
+    this.set("tokenId", Value.fromI32(value));
   }
 
   get createdAtTimestamp(): BigInt {
@@ -117,6 +104,49 @@ export class BinaryBlockGenesis extends Entity {
 
   set owner(value: string) {
     this.set("owner", Value.fromString(value));
+  }
+
+  get staked(): boolean {
+    let value = this.get("staked");
+    if (!value || value.kind == ValueKind.NULL) {
+      return false;
+    } else {
+      return value.toBoolean();
+    }
+  }
+
+  set staked(value: boolean) {
+    this.set("staked", Value.fromBoolean(value));
+  }
+
+  get stakedBy(): string | null {
+    let value = this.get("stakedBy");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set stakedBy(value: string | null) {
+    if (!value) {
+      this.unset("stakedBy");
+    } else {
+      this.set("stakedBy", Value.fromString(<string>value));
+    }
+  }
+
+  get totalEarnedRewards(): i32 {
+    let value = this.get("totalEarnedRewards");
+    if (!value || value.kind == ValueKind.NULL) {
+      return 0;
+    } else {
+      return value.toI32();
+    }
+  }
+
+  set totalEarnedRewards(value: i32) {
+    this.set("totalEarnedRewards", Value.fromI32(value));
   }
 }
 
@@ -159,11 +189,45 @@ export class User extends Entity {
     this.set("id", Value.fromString(value));
   }
 
+  get rewardsByBibkStaking(): i32 {
+    let value = this.get("rewardsByBibkStaking");
+    if (!value || value.kind == ValueKind.NULL) {
+      return 0;
+    } else {
+      return value.toI32();
+    }
+  }
+
+  set rewardsByBibkStaking(value: i32) {
+    this.set("rewardsByBibkStaking", Value.fromI32(value));
+  }
+
+  get rewardsByNftStaking(): i32 {
+    let value = this.get("rewardsByNftStaking");
+    if (!value || value.kind == ValueKind.NULL) {
+      return 0;
+    } else {
+      return value.toI32();
+    }
+  }
+
+  set rewardsByNftStaking(value: i32) {
+    this.set("rewardsByNftStaking", Value.fromI32(value));
+  }
+
   get nfts(): BinaryBlockGenesisLoader {
     return new BinaryBlockGenesisLoader(
       "User",
       this.get("id")!.toString(),
       "nfts"
+    );
+  }
+
+  get staked(): BinaryBlockGenesisLoader {
+    return new BinaryBlockGenesisLoader(
+      "User",
+      this.get("id")!.toString(),
+      "staked"
     );
   }
 

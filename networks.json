@@ -1,8 +1,12 @@
 {
   "goerli": {
-    "BinaryBlock_Genesis": {
-      "address": "0x0b1BAE4DaE34D801026EC77C8EF79d8D7c4306CD",
-      "startBlock": 9613099
+    "BIBK": {
+      "address": "0x74f3772504eC4dFe9Ad45ee2c8c1e10b74D0f847",
+      "startBlock": 9652254
+    },
+    "binaryblock": {
+      "address": "0x8F0A594fE4657909aFbd542972421c087480E3D8",
+      "startBlock": 9658409
     }
   }
 }

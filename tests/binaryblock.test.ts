@@ -8,9 +8,9 @@ import {
 } from "matchstick-as/assembly/index"
 import { Address, BigInt, Bytes } from "@graphprotocol/graph-ts"
 import { Approval } from "../generated/schema"
-import { Approval as ApprovalEvent } from "../generated/BinaryBlock_Genesis/BinaryBlock_Genesis"
-import { handleApproval } from "../src/binary-block-genesis"
-import { createApprovalEvent } from "./binary-block-genesis-utils"
+import { Approval as ApprovalEvent } from "../generated/binaryblock/binaryblock"
+import { handleApproval } from "../src/binaryblock"
+import { createApprovalEvent } from "./binaryblock-utils"
 
 // Tests structure (matchstick-as >=0.5.0)
 // https://thegraph.com/docs/en/developer/matchstick/#tests-structure-0-5-0

@@ -1,14 +1,19 @@
 type BinaryBlockGenesis @entity {
   id: ID!
-  tokenId: BigInt!
-  contentUri: String!
+  tokenId: Int!
   createdAtTimestamp: BigInt!
   creator: User!
   owner: User!
+  staked: Boolean!
+  stakedBy: User
+  totalEarnedRewards: Int!
 }
 
 type User @entity {
   id: ID!
+  rewardsByBibkStaking: Int!
+  rewardsByNftStaking: Int!
   nfts: [BinaryBlockGenesis!]! @derivedFrom(field: "owner")
+  staked: [BinaryBlockGenesis!]! @derivedFrom(field: "stakedBy")
   created: [BinaryBlockGenesis!]! @derivedFrom(field: "creator")
 }

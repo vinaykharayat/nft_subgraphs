@@ -4,15 +4,19 @@ import {
   Approval,
   ApprovalForAll,
   BatchMetadataUpdate,
+  BibkTokenAddressUpdate,
   ChainlinkCancelled,
   ChainlinkFulfilled,
   ChainlinkRequested,
+  ClaimRewards,
   ConsecutiveTransfer,
   OwnershipTransferRequested,
   OwnershipTransferred,
   RequestRewardData,
-  Transfer
-} from "../generated/BinaryBlock_Genesis/BinaryBlock_Genesis"
+  Staked,
+  Transfer,
+  Unstaked
+} from "../generated/binaryblock/binaryblock"
 
 export function createApprovalEvent(
   owner: Address,
@@ -85,6 +89,32 @@ export function createBatchMetadataUpdateEvent(
   return batchMetadataUpdateEvent
 }
 
+export function createBibkTokenAddressUpdateEvent(
+  oldAddress: Address,
+  newAddress: Address
+): BibkTokenAddressUpdate {
+  let bibkTokenAddressUpdateEvent = changetype<BibkTokenAddressUpdate>(
+    newMockEvent()
+  )
+
+  bibkTokenAddressUpdateEvent.parameters = new Array()
+
+  bibkTokenAddressUpdateEvent.parameters.push(
+    new ethereum.EventParam(
+      "oldAddress",
+      ethereum.Value.fromAddress(oldAddress)
+    )
+  )
+  bibkTokenAddressUpdateEvent.parameters.push(
+    new ethereum.EventParam(
+      "newAddress",
+      ethereum.Value.fromAddress(newAddress)
+    )
+  )
+
+  return bibkTokenAddressUpdateEvent
+}
+
 export function createChainlinkCancelledEvent(id: Bytes): ChainlinkCancelled {
   let chainlinkCancelledEvent = changetype<ChainlinkCancelled>(newMockEvent())
 
@@ -119,6 +149,34 @@ export function createChainlinkRequestedEvent(id: Bytes): ChainlinkRequested {
   )
 
   return chainlinkRequestedEvent
+}
+
+export function createClaimRewardsEvent(
+  claimer: Address,
+  tokenId: BigInt,
+  claimedRewards: BigInt
+): ClaimRewards {
+  let claimRewardsEvent = changetype<ClaimRewards>(newMockEvent())
+
+  claimRewardsEvent.parameters = new Array()
+
+  claimRewardsEvent.parameters.push(
+    new ethereum.EventParam("claimer", ethereum.Value.fromAddress(claimer))
+  )
+  claimRewardsEvent.parameters.push(
+    new ethereum.EventParam(
+      "tokenId",
+      ethereum.Value.fromUnsignedBigInt(tokenId)
+    )
+  )
+  claimRewardsEvent.parameters.push(
+    new ethereum.EventParam(
+      "claimedRewards",
+      ethereum.Value.fromUnsignedBigInt(claimedRewards)
+    )
+  )
+
+  return claimRewardsEvent
 }
 
 export function createConsecutiveTransferEvent(
@@ -221,6 +279,24 @@ export function createRequestRewardDataEvent(
   return requestRewardDataEvent
 }
 
+export function createStakedEvent(from: Address, tokenId: BigInt): Staked {
+  let stakedEvent = changetype<Staked>(newMockEvent())
+
+  stakedEvent.parameters = new Array()
+
+  stakedEvent.parameters.push(
+    new ethereum.EventParam("from", ethereum.Value.fromAddress(from))
+  )
+  stakedEvent.parameters.push(
+    new ethereum.EventParam(
+      "tokenId",
+      ethereum.Value.fromUnsignedBigInt(tokenId)
+    )
+  )
+
+  return stakedEvent
+}
+
 export function createTransferEvent(
   from: Address,
   to: Address,
@@ -244,4 +320,22 @@ export function createTransferEvent(
   )
 
   return transferEvent
+}
+
+export function createUnstakedEvent(from: Address, tokenId: BigInt): Unstaked {
+  let unstakedEvent = changetype<Unstaked>(newMockEvent())
+
+  unstakedEvent.parameters = new Array()
+
+  unstakedEvent.parameters.push(
+    new ethereum.EventParam("from", ethereum.Value.fromAddress(from))
+  )
+  unstakedEvent.parameters.push(
+    new ethereum.EventParam(
+      "tokenId",
+      ethereum.Value.fromUnsignedBigInt(tokenId)
+    )
+  )
+
+  return unstakedEvent
 }
