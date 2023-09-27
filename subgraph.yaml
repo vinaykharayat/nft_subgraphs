@@ -4,11 +4,11 @@ schema:
 dataSources:
   - kind: ethereum
     name: BIBK
-    network: goerli
+    network: sepolia
     source:
-      address: "0x74f3772504eC4dFe9Ad45ee2c8c1e10b74D0f847"
+      address: "0xa03372c5D54c0A9427C9f743FFdeA1BCf8780ccC"
       abi: BIBK
-      startBlock: 9652254
+      startBlock: 4373085
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -30,11 +30,11 @@ dataSources:
       file: ./src/bibk.ts
   - kind: ethereum
     name: binaryblock
-    network: goerli
+    network: sepolia
     source:
-      address: "0x8F0A594fE4657909aFbd542972421c087480E3D8"
+      address: "0x7C64Cb5411A96a00A55F1E0c03DAF9a9F95964EB"
       abi: binaryblock
-      startBlock: 9658409
+      startBlock: 4373090
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7

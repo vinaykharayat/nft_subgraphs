@@ -5,8 +5,8 @@ import { User } from "../generated/schema"
 
 export function handleClaimRewards(event: ClaimRewardsEvent):void {
   let user = User.load(event.params.claimer.toHexString());
-  if(user && event.params.earnedRewards.isI32()) {
-    user.rewardsByBibkStaking += event.params.earnedRewards.toI32();
+  if(user) {
+    user.rewardsByBibkStaking = user.rewardsByBibkStaking.plus(event.params.earnedRewards);
     user.save();
   }
 }

@@ -1,0 +1,2 @@
+graph codegen && graph build
+graph deploy --studio binaryblock-2

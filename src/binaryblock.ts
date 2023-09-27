@@ -1,3 +1,4 @@
+import { ethereum } from "@graphprotocol/graph-ts";
 import {
   ClaimRewards as ClaimRewardsEvent,
   Staked as StakedEvent,
@@ -25,7 +26,7 @@ export function handleTransfer(event: TransferEvent): void {
     binaryBlockGenesis.creator = event.params.to.toHexString();
     binaryBlockGenesis.createdAtTimestamp = event.block.timestamp;
     binaryBlockGenesis.staked = false;
-    binaryBlockGenesis.totalEarnedRewards = 0;
+    binaryBlockGenesis.totalEarnedRewards = ethereum.Value.fromI32(0).toBigInt();
     // let binaryBlockGenesisContract = BinaryBlockGenesisContract.bind(event.address);
     // log.debug("tokenURI {}", [binaryBlockGenesisContract.tokenURI(event.params.tokenId)]);
     // binaryBlockGenesis.contentUri = binaryBlockGenesisContract.tokenURI(event.params.tokenId);
@@ -36,8 +37,7 @@ export function handleTransfer(event: TransferEvent): void {
   let user = User.load(event.params.to.toHexString());
   if(!user) {
     user = new User(event.params.to.toHexString());
-    user.rewardsByBibkStaking = 0;
-    user.rewardsByNftStaking = 0;
+    user.rewardsByBibkStaking = ethereum.Value.fromI32(0).toBigInt();
     user.save();
   }
 }
@@ -53,14 +53,8 @@ export function handleUnstaked(event: UnstakedEvent): void {
 
 export function handleClaimRewards(event: ClaimRewardsEvent): void {
   let binaryBlockGenesis = BinaryBlockGenesis.load(event.params.tokenId.toString());
-  if(binaryBlockGenesis && event.params.claimedRewards.isI32()) {
-    binaryBlockGenesis.totalEarnedRewards += event.params.claimedRewards.toI32();
+  if(binaryBlockGenesis) {
+    binaryBlockGenesis.totalEarnedRewards = binaryBlockGenesis.totalEarnedRewards.plus(event.params.claimedRewards);
     binaryBlockGenesis.save();
   } 
-  
-  let user = User.load(event.params.claimer.toHexString());
-  if(user && event.params.claimedRewards.isI32()) {
-    user.rewardsByNftStaking += event.params.claimedRewards.toI32();
-    user.save();
-  }
 }
